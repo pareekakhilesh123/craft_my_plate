@@ -45,7 +45,7 @@ router.post('/login', (req, res) => {
                 status: "New user added"
             });
      }
-     res.status(400).json({
+     res.status(409).json({
         status: "User allreday registered"
     });
 

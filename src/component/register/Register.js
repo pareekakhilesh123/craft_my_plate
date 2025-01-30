@@ -9,13 +9,15 @@ import {
   Avatar,
   Grid,
   Link,
+  Snackbar, 
+  Alert, 
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
- 
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
@@ -23,6 +25,12 @@ function Register() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); 
+  const [serverError, setServerError] = useState(""); 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState(""); 
+
+  const navigate = useNavigate(); 
 
   const validate = () => {
     const tempErrors = {};
@@ -59,12 +67,39 @@ function Register() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      alert("Registration Successful!");
-      console.log("Registered Data: ", formData);
+      setLoading(true);
+      setServerError(""); 
+
+      try {
+        const response = await axios.post("http://localhost:3001/api/register", {
+          name: formData.username,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        console.log("Registered users: ", response.data);
+
+        setSnackbarMessage("Registration Successful!");
+        setOpenSnackbar(true);
+
+        setTimeout(() => {
+          navigate("/login"); 
+        }, 2000);
+
+      } catch (error) {
+        setServerError(error.response?.data?.message || "Something went wrong.");
+        console.error("Error: ", error);
+      } finally {
+        setLoading(false);
+      }
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false); 
   };
 
   return (
@@ -87,7 +122,6 @@ function Register() {
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <TextField
             margin="normal"
-          
             fullWidth
             id="username"
             label="Username"
@@ -100,7 +134,6 @@ function Register() {
           />
           <TextField
             margin="normal"
-           
             fullWidth
             id="email"
             label="Email Address"
@@ -112,7 +145,6 @@ function Register() {
           />
           <TextField
             margin="normal"
-           
             fullWidth
             name="password"
             label="Password"
@@ -125,7 +157,6 @@ function Register() {
           />
           <TextField
             margin="normal"
-           
             fullWidth
             name="confirmPassword"
             label="Confirm Password"
@@ -136,13 +167,19 @@ function Register() {
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword}
           />
+          {serverError && (
+            <Typography color="error" variant="body2" align="center">
+              {serverError}
+            </Typography>
+          )}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading} 
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
@@ -153,8 +190,19 @@ function Register() {
           </Grid>
         </Box>
       </Box>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={1000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }} 
+      >
+        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Container>
-  )
+  );
 }
 
-export default Register
+export default Register;

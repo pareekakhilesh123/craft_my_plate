@@ -1,0 +1,79 @@
+[
+    {
+        "id": 1,
+        "name":"Tomato Soup",
+        "category": "Appetizers",
+        "price": 120,
+        "availability": true
+    },
+    {
+        "id": 2,
+        "name":"Sandwitch",
+        "category": "Appetizers",
+        "price": 150,
+        "availability": true
+    },
+    {
+        "id": 3,
+        "name":"Pizza",
+        "category": "Appetizers",
+        "price": 300,
+        "availability": true
+    },  
+    {
+        "id": 4,
+        "name":"Panner Makhanwala",
+        "category": "Main Course",
+        "price": 180,
+        "availability": true
+    }, 
+     {
+       "id": 5,
+        "name":"Veg Handi",
+        "category": "Main Course",
+        "price": 180,
+        "availability": true
+    },  
+    {
+        "id": 6,
+        "name":"Rotti",
+        "category": "Main Course",
+        "price": 30,
+        "availability": true
+    },  
+    {
+        "id": 7,
+        "name":"Veg Thali",
+        "category": "Main Course",
+        "price": 250,
+        "availability": true
+    },
+    {
+        "id": 8,
+        "name":"Gajar Halwal",
+        "category": "Desserts",
+        "price": 120,
+        "availability": true
+    },
+    {
+       "id": 9,
+        "name":"Gulab Jamun",
+        "category": "Desserts",
+        "price": 80,
+        "availability": true
+    },
+    {
+       "id": 10,
+        "name":"Ras Malayi",
+        "category": "Desserts",
+        "price": 100,
+        "availability": true
+    },
+    {
+       "id": 11,
+        "name":"Kulphi",
+        "category": "Desserts",
+        "price": 50,
+        "availability": true
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "Admin",
+        "password": "password",
+        "email": "admin@craftmyplate.com"
+    },
+    {
+        "id": 2,
+        "name": "User 1",
+        "password": "password",
+        "email": "user1@myemail.com"
+    },
+    {
+        "id": 3,
+        "name": "User 2",
+        "password": "password",
+        "email": "user2@myemail.com"
+    }
+]

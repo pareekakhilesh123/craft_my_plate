@@ -1,6 +1,9 @@
 const express = require('express')
 const cors = require('cors');
 
+require('dotenv').config()
+
+
 const app = express()
 
 // Routers
@@ -10,7 +13,7 @@ const userRoutes = require("./routes/userRoutes")
 app.use(express.json());
 app.use(cors());
 
-const port = 3001
+const port =process.env.PORT
 
 app.get('/health', (req, res) => {
   res.status(200)

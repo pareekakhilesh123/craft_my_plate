@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { menuInfo, onQuantityChange } from '../../../../slices/menuSlice'; 
-import {Box,Typography,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Tabs,Tab,TextField,} from '@mui/material';
+import { menuInfo, onQuantityChange } from '../../../../slices/menuSlice';
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Tabs, Tab, TextField, } from '@mui/material';
+import { unionBy } from 'lodash';
+
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,12 +34,13 @@ const TabsSection = ({ user }) => {
   const dispatch = useDispatch();
   const menuData = useSelector((state) => state.menu);
 
+  const uniqCategory = unionBy(menuData, 'category')
   useEffect(() => {
     const fetchMenu = async () => {
       try {
         const response = await axios.get('http://localhost:3001/api/menu');
         const menuItems = response.data.data;
-        dispatch(menuInfo(menuItems)); 
+        dispatch(menuInfo(menuItems));
       } catch (error) {
         console.error('Error fetching menu:', error);
       }
@@ -53,8 +56,8 @@ const TabsSection = ({ user }) => {
   const handleQuantityChange = (index, newQuantity) => {
     dispatch(onQuantityChange({
       index, newQuantity
-    })); 
-    };
+    }));
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -63,12 +66,12 @@ const TabsSection = ({ user }) => {
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Desserts" {...a11yProps(0)} />
-          <Tab label="Main Course" {...a11yProps(1)} />
-          <Tab label="Appetizers" {...a11yProps(2)} />
+          {
+            uniqCategory.map((c, i) => <Tab label={c.category} {...a11yProps(i)} />)
+          }
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      {/* <CustomTabPanel value={value} index={0}>
         <Typography variant="h6">Desserts</Typography>
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
@@ -131,23 +134,91 @@ const TabsSection = ({ user }) => {
             </TableBody>
           </Table>
         </TableContainer>
-      </CustomTabPanel>
+      </CustomTabPanel> */}
+      {
+        uniqCategory.map((c, i) => {
+          const menuItems = menuData.filter(item => item.category === c.category)
+          console.log("menuItems", menuItems)
+          return <CustomTabPanel value={value} index={i}>
+            {/* <Typography variant="h6">{c.category}</Typography> */}
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{c.category}</TableCell>
+                    <TableCell align="right">Price</TableCell>
+                    <TableCell align="right">Quantity</TableCell>
+                    <TableCell align="right">Total</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {menuItems.map((row, index) => (
+                    <TableRow key={row.id}>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell align="right">{row.price}</TableCell>
+                      <TableCell align="right">
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <button
+                            onClick={() => handleQuantityChange(row.id, Math.max(row.quantity - 1, 0))}
+                            style={{
+                              padding: '5px',
+                              margin: '0 5px',
+                              borderRadius: '5px',
+                              border: '1px solid #ccc',
+                              background: '#f0f0f0',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            -
+                          </button>
+                          <TextField
+                            type="text"
+                            size="small"
+                            value={row.quantity || 0}
+                            onChange={(e) =>
+                              handleQuantityChange(row.id, Math.max(Number(e.target.value), 0))
+                            }
+                            inputProps={{ min: 0 }}
+                            sx={{ width: '60px' }}
+                          />
+                          <button
+                            onClick={() => handleQuantityChange(row.id, (row.quantity || 0) + 1)}
+                            style={{
+                              padding: '5px',
+                              margin: '0 5px',
+                              borderRadius: '5px',
+                              border: '1px solid #ccc',
+                              background: '#f0f0f0',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            +
+                          </button>
+                        </Box>
+                      </TableCell>
+                      <TableCell align="right">{row.total || 0}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CustomTabPanel>
+        })
+      }
 
+      {/* tab 2  Main Course*/}
 
-
-{/* tab 2  Main Course*/}
-
-      <CustomTabPanel value={value} index={1}>
+      {/* <CustomTabPanel value={value} index={1}>
         <Typography variant="h6">Main Course</Typography>
         <p>Here is the main course content.</p>
-      </CustomTabPanel>
+      </CustomTabPanel> */}
 
-{/* tab 2  Appetizers*/}
+      {/* tab 2  Appetizers*/}
 
-      <CustomTabPanel value={value} index={2}>
+      {/* <CustomTabPanel value={value} index={2}>
         <Typography variant="h6">Appetizers</Typography>
         <p>Here are some delicious Appetizers!</p>
-      </CustomTabPanel>
+      </CustomTabPanel> */}
 
 
     </Box>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { menuInfo } from '../../../../slices/menuSlice'; 
+import { menuInfo, onQuantityChange } from '../../../../slices/menuSlice'; 
 import {Box,Typography,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Tabs,Tab,TextField,} from '@mui/material';
 
 function CustomTabPanel(props) {
@@ -29,7 +29,6 @@ function a11yProps(index) {
 
 const TabsSection = ({ user }) => {
   const [value, setValue] = useState(0);
-  const [rows, setRows] = useState([]);
   const dispatch = useDispatch();
   const menuData = useSelector((state) => state.menu);
 
@@ -38,7 +37,6 @@ const TabsSection = ({ user }) => {
       try {
         const response = await axios.get('http://localhost:3001/api/menu');
         const menuItems = response.data.data;
-        setRows(menuItems);
         dispatch(menuInfo(menuItems)); 
       } catch (error) {
         console.error('Error fetching menu:', error);
@@ -53,19 +51,10 @@ const TabsSection = ({ user }) => {
   };
 
   const handleQuantityChange = (index, newQuantity) => {
-    const updatedRows = rows.map((row, i) => {
-      if (i === index) {
-        return {
-          ...row, 
-          quantity: newQuantity, 
-          total: newQuantity * row.price, 
-        };
-      }
-      return row; 
-    });
-  
-    setRows(updatedRows); 
-  };
+    dispatch(onQuantityChange({
+      index, newQuantity
+    })); 
+    };
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -92,7 +81,7 @@ const TabsSection = ({ user }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => (
+              {menuData.map((row, index) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.name}</TableCell>
                   <TableCell align="right">{row.price}</TableCell>

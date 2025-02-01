@@ -8,9 +8,25 @@ import {
   TableRow,
   Paper,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-function PaymentDetail({ rows, invoiceSubtotal, invoiceTaxes, invoiceTotal }) {
-  const TAX_RATE = 0.07;
+
+function subtotal(items) {
+  return items.map(({ total }) => total).reduce((sum, i) => sum + i, 0);
+}
+
+const TAX_RATE = 0.07;
+
+
+
+function PaymentDetail() {
+  const menuData = useSelector((state) => state.menu);
+  const orderList = menuData.filter(menuItem => menuItem.quantity > 0)
+
+  const invoiceSubtotal = subtotal(orderList);
+  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+  const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+
 
   function ccyFormat(num) {
     return `${num.toFixed(2)}`;
@@ -34,12 +50,12 @@ function PaymentDetail({ rows, invoiceSubtotal, invoiceTaxes, invoiceTotal }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {orderList.map((row) => (
             <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell align="right">{row.quantity}</TableCell>
+              <TableCell align="right">{row.price}</TableCell>
+              <TableCell align="right">{ccyFormat(row.total)}</TableCell>
             </TableRow>
           ))}
           <TableRow>

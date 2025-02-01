@@ -5,21 +5,7 @@ import TabsSection from './TabsSection';
 import PaymentDetail from './PaymentDetail';
 
 
-const TAX_RATE = 0.07;
 
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rowsData = [
-  { desc: 'Paperclips (Box)', qty: 100, unit: 1.15, price: 115 },
-  { desc: 'Paper (Case)', qty: 10, unit: 45.99, price: 459.9 },
-  { desc: 'Waste Basket', qty: 2, unit: 17.99, price: 35.98 },
-];
-
-const invoiceSubtotal = subtotal(rowsData);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
 function Dashboardsection() {
   const user = useSelector((state) => state.user);
@@ -48,12 +34,7 @@ function Dashboardsection() {
           <TabsSection rows={rows} handleQuantityChange={handleQuantityChange} user={user} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <PaymentDetail
-            rows={rowsData}
-            invoiceSubtotal={invoiceSubtotal}
-            invoiceTaxes={invoiceTaxes}
-            invoiceTotal={invoiceTotal}
-          />
+          <PaymentDetail />
         
         </Grid>
       </Grid>

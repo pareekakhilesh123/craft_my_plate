@@ -13,6 +13,9 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {  useDispatch } from "react-redux";
+import { addUserInfo } from '../../slices/userSlice'
+
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -20,6 +23,7 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validate = () => {
     const tempErrors = {};
@@ -48,6 +52,7 @@ const LoginPage = () => {
           email: username,
           password,
         });
+        setUsername()
 
         if (response.data.status === "success") {
           setSnackbar({
@@ -55,9 +60,15 @@ const LoginPage = () => {
             message: "Login successful!",
             severity: "success",
           });
+          dispatch(addUserInfo(
+            {
+              name: response.data.name,
+            token: response.data.token
+          }
+        ))
 
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate("/dashboard", { replace: true });
           }, 1000); 
         } else {
           setSnackbar({

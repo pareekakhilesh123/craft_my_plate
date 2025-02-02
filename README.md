@@ -56,6 +56,10 @@ This project is a Full-Stack Food Delivery System with a backend API built using
 
 ## Frontend (React.js)
 
+#### Login Email:  
+-  email:- admin@craftmyplate.com
+   password:- password,
+
 ### React Application Setup
 
 - Use Create React App (CRA) or an alternative setup to initialize the project.

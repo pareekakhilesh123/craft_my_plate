@@ -33,7 +33,7 @@ function PaymentDetail() {
   }
 
   return (
-    <TableContainer component={Paper} sx={{ marginTop: '20px' }}>
+    <TableContainer component={Paper} sx={{ marginTop: '60px' }}>
       <Table aria-label="spanning table">
         <TableHead>
           <TableRow>

@@ -2,6 +2,7 @@ import { useTheme } from '@mui/material/styles';
 import { Typography, AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Avatar , CssBaseline } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom"; 
 
 export default function Appbar() {
   const theme = useTheme();
@@ -10,6 +11,10 @@ export default function Appbar() {
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/order");
+  }
 
   return (
     <>
@@ -48,9 +53,12 @@ export default function Appbar() {
           <ListItem button>
             <ListItemText primary="Dashboard" />
           </ListItem>
-          <ListItem button>
+
+          <ListItem button onClick={handleClick}>
             <ListItemText primary="Orders" />
+            
           </ListItem>
+      
           <ListItem button>
             <ListItemText primary="Users" />
           </ListItem>

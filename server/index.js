@@ -7,6 +7,8 @@ const app = express();
 // Routers
 const userRoutes = require("./routes/userRoutes");
 const menuRoutes = require("./routes/menuRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+
 
 // Middleware
 app.use(express.json());
@@ -21,6 +23,9 @@ app.get('/health', (req, res) => {
 
 app.use('/api', userRoutes);
 app.use('/api', menuRoutes);  
+
+
+app.use('/api', orderRoutes);
 
 
 app.listen(port, () => {

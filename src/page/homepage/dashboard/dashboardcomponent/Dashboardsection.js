@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Container } from '@mui/material';
+import { Grid, Container, Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import TabsSection from './TabsSection';
 import PaymentDetail from './PaymentDetail';
@@ -34,6 +34,22 @@ function Dashboardsection() {
           <TabsSection rows={rows} handleQuantityChange={handleQuantityChange} user={user} />
         </Grid>
         <Grid item xs={12} md={4}>
+
+        <Grid
+  container
+  direction="row"
+  sx={{
+    justifyContent: "flex-end",
+    alignItems: "center",
+  }}>    <Button sx={{
+    backgroundColor:"blue",
+    color:"wheat",
+  }}>
+  Check Out
+  </Button>
+  </Grid>
+
+     
           <PaymentDetail />
         
         </Grid>

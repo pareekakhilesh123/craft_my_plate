@@ -33,21 +33,12 @@ function Dashboardsection() {
         <Grid item xs={12} md={8}>
           <TabsSection rows={rows} handleQuantityChange={handleQuantityChange} user={user} />
         </Grid>
+
+
+
         <Grid item xs={12} md={4}>
 
-        <Grid
-  container
-  direction="row"
-  sx={{
-    justifyContent: "flex-end",
-    alignItems: "center",
-  }}>    <Button sx={{
-    backgroundColor:"blue",
-    color:"wheat",
-  }}>
-  Check Out
-  </Button>
-  </Grid>
+      
 
      
           <PaymentDetail />

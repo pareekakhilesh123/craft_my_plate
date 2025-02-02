@@ -1,70 +1,141 @@
-# Getting Started with Create React App
+# Food Delivery System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Full-Stack React and Node.js Developer Project
 
-## Available Scripts
+### Overview
 
-In the project directory, you can run:
+This project is a Full-Stack Food Delivery System with a backend API built using Node.js and Express, and a frontend dashboard developed using React.js. It includes user authentication, menu management, order placement, and state management using Redux.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Backend (Node.js + Express)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Express Server Setup
 
-### `npm test`
+- The Express server runs on port `3001` (or any preferred port).
+- Optionally, a local JSON database can be used for data storage.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Models
 
-### `npm run build`
+#### User Model:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `username`: A string (required).
+- `password`: A hashed string (required).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Menu Model:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `name`: A string (required).
+- `category`: A string (e.g., Appetizers, Main Course, Desserts).
+- `price`: A number (required).
+- `availability`: A boolean (default: `true`).
 
-### `npm run eject`
+#### Order Model:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- `userId`: Reference to the User who placed the order.
+- `items`: Array of menu items (menu item ID and quantity).
+- `totalAmount`: Calculated total price.
+- `status`: String (e.g., "Pending", "Completed").
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### API Endpoints
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Authentication:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- `POST /register`: Register a new user.
+- `POST /login`: Login a user and return a JWT token.
 
-## Learn More
+#### Menu Management:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `GET /menu`: Fetch all menu items.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Order Management:
 
-### Code Splitting
+- `POST /orders`: Place an order with selected menu items and quantities.
+- `GET /orders`: Fetch all orders of a logged-in user.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Frontend (React.js)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### React Application Setup
 
-### Making a Progressive Web App
+- Use Create React App (CRA) or an alternative setup to initialize the project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Pages and Components
 
-### Advanced Configuration
+#### Login Page:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- A login form that accepts username and password.
+- On successful login, store the JWT token locally.
 
-### Deployment
+#### Menu Page:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Display all menu items in a table layout.
+- menu tabs (Appetizers Tab , Main Course Tab , Desserts Tab).
+- Desserts Name , Price  , Quantity  ,  Total in Table View
 
-### `npm run build` fails to minify
+#### Order Page:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Order View (Order Id , Total Amount, Status )
+- After placing the order, show the user their order history.
+
+### State Management
+
+- Redux is used to manage application state, such as user sessions and menu items.
+
+### API Integration
+
+- Axios is used for making HTTP requests to the backend.
+
+### Styling
+
+- Material-UI is used for a modern and responsive UI design.
+
+---
+
+## Installation & Setup
+
+### Backend Setup
+
+1. Clone the repository.
+2. Navigate to the backend directory and install dependencies:
+   ```bash
+   cd backend
+   npm install
+   ```
+3. Start the backend server:
+   ```bash
+   npm start
+   ```
+
+### Frontend Setup
+
+1. Navigate to the frontend directory and install dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. Start the frontend application:
+   ```bash
+   npm start
+   ```
+
+---
+
+## Technologies Used
+
+- **Backend:** Node.js, Express, JWT Authentication
+- **Frontend:** React.js, Redux, Axios, Material-UI
+- **Database:** JSON file or MongoDB (for scalability)
+
+---
+
+## Future Enhancements
+
+- Implement real-time order status updates using WebSockets.
+- Add a payment gateway integration.
+- Enhance UI with animations and better user experience.
+
+---
+
+###
+

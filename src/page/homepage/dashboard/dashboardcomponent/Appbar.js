@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material/styles';
-import { Typography, AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Avatar , CssBaseline } from '@mui/material';
+import { Typography, AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Avatar, CssBaseline } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom"; 
@@ -11,8 +11,14 @@ export default function Appbar() {
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
+
   const navigate = useNavigate();
-  function handleClick() {
+
+  function handleDashboardClick() {
+    navigate("/dashboard");
+  }
+
+  function handleOrderClick() {
     navigate("/order");
   }
 
@@ -33,8 +39,6 @@ export default function Appbar() {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Food Delivery Dashboard
           </Typography>
-          
-       
           <Avatar 
             alt="Profile" 
             src="/profile-photo.jpg" 
@@ -50,13 +54,12 @@ export default function Appbar() {
         sx={{ width: 240, flexShrink: 0, '& .MuiDrawer-paper': { width: 240 } }}
       >
         <List sx={{ backgroundColor: '#FFCC80', paddingTop: 2 }}>
-          <ListItem button>
+          <ListItem button onClick={handleDashboardClick}>
             <ListItemText primary="Dashboard" />
           </ListItem>
 
-          <ListItem button onClick={handleClick}>
+          <ListItem button onClick={handleOrderClick}>
             <ListItemText primary="Orders" />
-            
           </ListItem>
       
           <ListItem button>
@@ -67,8 +70,6 @@ export default function Appbar() {
           </ListItem>
         </List>
       </Drawer>
-
-     
     </>
   );
 }

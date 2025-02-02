@@ -56,7 +56,7 @@ function Order() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Order Id</StyledTableCell>
-                  <StyledTableCell align="right">User ID</StyledTableCell>
+                  
                   <StyledTableCell align="right">Total Amount</StyledTableCell>
                   <StyledTableCell align="right">Status</StyledTableCell>
                 </TableRow>
@@ -67,7 +67,7 @@ function Order() {
                     <StyledTableCell component="th" scope="row">
                       {order.id}
                     </StyledTableCell>
-                    <StyledTableCell align="right">{order.userId}</StyledTableCell>
+                    
                     <StyledTableCell align="right">{order.totalAmount}</StyledTableCell>
                     <StyledTableCell align="right">{order.status}</StyledTableCell>
                   </StyledTableRow>
